@@ -33,7 +33,7 @@ def load_data(data_dir):
                     # ignoring first 10 lines, only using bluetooth data
                     f.readline()
                 bluetooth_data = list()
-                for line in f.read().split("\n"):
+                for line in f:
                     # As per README.md, only using BlueProxTx readings
                     if "BlueProxTx" in line:
                         record = line.split(",")
