@@ -32,17 +32,19 @@ def load_data(data_dir):
                 for i in range(10):
                     # ignoring first 10 lines, only using bluetooth data
                     f.readline()
-                # As per README.md, only using BlueProxTx readings
-                bluetooth_data = [line.split(",") for line in f.read().split("\n") if "BlueProxTx" in line]
-                for record in bluetooth_data:
-                    # remove data that is not needed
-                    record.pop(1)
-                    record.pop(1)
-                    record.pop(2)
-                    record.pop(2)
-                    # remove decimal as datetime crashes with decimal in seconds
-                    # some have "T" instead of a space in between days and hours
-                    record[0] = record[0][:record[0].index(".")].replace("T", " ")
+                bluetooth_data = list()
+                for line in f.read().split("\n"):
+                    # As per README.md, only using BlueProxTx readings
+                    if "BlueProxTx" in line:
+                        record = line.split(",")
+                        # remove data that is not needed
+                        record = [
+                            # remove decimal as datetime crashes with decimal in seconds
+                            # some have "T" instead of a space in between days and hours
+                            record[0][:record[0].index(".")].replace("T", " "),
+                            record[3]  # rssi value
+                        ]
+                        bluetooth_data.append(record)
                 # take random pairs of readings and take the time in between
                 random.shuffle(bluetooth_data)
                 for i in range(math.floor(len(bluetooth_data)/2)):
@@ -53,7 +55,6 @@ def load_data(data_dir):
                         time_1 = datetime.strptime(record_1[0], "%Y-%m-%d %H:%M:%S")
                         time_2 = datetime.strptime(record_2[0], "%Y-%m-%d %H:%M:%S")
                     except ValueError:
-                        print("Skipping badly formatted time: {}".format(time_1))
                         continue
                     time_interval = abs(time_1 - time_2).seconds
                     # todo: add phone types as a feature
