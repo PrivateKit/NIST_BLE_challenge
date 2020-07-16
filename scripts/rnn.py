@@ -4,6 +4,8 @@ import os
 import random
 import math
 
+import torch.nn as nn
+
 NUM_READINGS_PER_INTERVAL = 150
 INTERVAL_LENGTH = 4  # length in seconds of each interval
 
@@ -94,7 +96,7 @@ def load_data(key_path, data_path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='detects TC4TL')
+    parser = argparse.ArgumentParser()
     parser.add_argument('--data-dir', '-d', type=str, required=True)
     parser.add_argument('--seed', '-s', type=int, default=100, required=False)
 
