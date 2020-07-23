@@ -21,5 +21,5 @@ if __name__ == "__main__":
 
     random.seed(seed)
 
-    print("The code for the RNN is currently on Google Colab: https://colab.research.google.com/drive/1OJJGtvnoBtutnX43JnF9_boB7m015TVk?usp=sharing")
+    print("The code for the RNN is currently on Google Colab: https://colab.research.google.com/drive/1EiCx_vuLSqIaIkvyploM6DCx5UzzNyxH?usp=sharing")
 
